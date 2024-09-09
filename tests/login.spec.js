@@ -2,7 +2,7 @@ import { test ,expect } from '@playwright/test'
 import pageManager from '../utils/pageManager'
 
 
-//testghfg
+
 let createPage
 test('valid login', async ({ page }) => {
     createPage= new pageManager(page)
