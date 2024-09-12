@@ -79,7 +79,10 @@ class helperMethods {
     }
     return text.trim()
   }
+  async getTextFromAttribute(selector,attribute) {
 
+    return await this.page.getAttribute(selector, attribute)
+  }
   async checkTextNotEmpty(selector) {
     const locator = this.page.locator(selector).nth(0)
     await locator.waitFor()
@@ -101,22 +104,33 @@ class helperMethods {
 
   async isElementEnabled(selector) {
     await this.page.locator(selector).waitFor({ state: 'visible' })
-    expect(await this.page.locator(selector)).toBeEnabled()
+    await expect(await this.page.locator(selector)).toBeEnabled()
   }
 
   async validateUrlIncludes(substring) {
     await expect(this.page).toHaveURL(new RegExp(`.${substring}.*`))
   }
 
+  async validateUrlEnd(expectedEnd) {
+    expect(this.page.url()).toMatch( new RegExp(`/${expectedEnd}$`))
+  }
   async isElementVisible(selector) {
     await this.page.locator(selector).waitFor({ state: 'visible' })
-    expect(await this.page.locator(selector)).toBeVisible()
+    //await expect(await this.page.locator(selector)).toBeVisible()
+    await expect(this.page.locator(selector)).toBeVisible()
   }
 
   async isElementNotVisible(element) {
     await expect(element).toBeHidden()
   }
 
+  async isElementExists(selector) {
+    if (await this.page.locator(selector).count()  > 0)
+      console.log('Element exists on the page.');
+     else
+      console.log('Element does not exist on the page.');
+
+  }
   async waitForNavigation() {
     await this.page.waitForNavigation()
   }
@@ -132,6 +146,16 @@ class helperMethods {
   async waitforsomeTime() {
     await this.page.waitForTimeout(5000)
   }
+  async selectRadioButton(selector) {
+    await this.page.locator(selector).click()
+  }
+  async selectDropdownOption(dropdownSelector, optionValue) {
+    // Use Playwright's selectOption to select the dropdown option by option
+    await this.page.selectOption(dropdownSelector, optionValue);
+  }
+  async selectDropdownValue(dropdownSelector, labelText) {
+    // Use Playwright's selectOption to select the dropdown option by value
+    await this.page.selectOption(dropdownSelector, { label: labelText })
+  }
 }
-
 export default helperMethods

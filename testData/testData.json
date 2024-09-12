@@ -1,5 +1,20 @@
 {
   "baseUrl":"https://automationexercise.com/",
-  "email": "soundarya.arikati@miele.com",
-  "password": "Adi1.vara"
+  "validemail": "soundarya.arikati@miele.com",
+  "invalidemail": "soundarya.test@miele.com",
+  "password": "Adi1.vara",
+  "registerpassword": "Test@123",
+  "errormessage": "Your email or password is incorrect!",
+  "days": "2",
+  "months": "March",
+  "years": "1995",
+  "firstName": "firstname",
+  "lastName": "lastname",
+  "company": "Miele",
+  "address": "paparjuthota,chirala",
+  "country": "India",
+  "city": "Chirala",
+  "state": "Andhra Pradesh",
+  "zipcode": "523155",
+  "mobile": "987654321"
 }

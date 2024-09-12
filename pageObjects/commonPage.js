@@ -9,7 +9,7 @@ class commonPage extends helperMethods {
         super(page)
     }
     async userLogin() {
-        await this.fillTextBox(email_text, testData.email)
+        await this.fillTextBox(email_text, testData.validemail)
         await this.fillTextBox(password_text, testData.password)
         await this.clickFirstElement(login_button)
     }
