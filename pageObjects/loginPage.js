@@ -11,9 +11,7 @@ class loginPage extends helperMethods {
     constructor(page) {
         super(page)
     }
-
-
-    async enterEmail(email) {
+   async enterEmail(email) {
       let inputEmail=email==='valid'?testData.validemail:testData.invalidemail
         await this.fillTextBox(email_text, inputEmail)
     }
@@ -28,8 +26,13 @@ class loginPage extends helperMethods {
         email==='valid'?await this.isElementExists(logout):await this.validateText(error_text,testData.errormessage)
     }
     async validateNewAccount() {
-
         await this.isElementVisible(logout)
+    }
+    async validUserLogin() {
+        await this.enterEmail('valid')
+        await this.enterPassword()
+        await this.clickLogin()
+        await this.validateLogin('valid')
     }
 }
 export default loginPage

@@ -99,7 +99,7 @@ class helperMethods {
 
   async isElementDisabled(selector) {
     await this.page.waitForTimeout(3000)
-    expect(await this.page.locator(selector)).toBeDisabled()
+    await expect(await this.page.locator(selector)).toBeDisabled()
   }
 
   async isElementEnabled(selector) {
@@ -129,7 +129,11 @@ class helperMethods {
       console.log('Element exists on the page.');
      else
       console.log('Element does not exist on the page.');
-
+  }
+  async injectcookie(sessionCookie) {
+    await this.page.addInitScript((value) => {
+      window.localStorage.setItem('sessionid', value)
+    },sessionCookie)
   }
   async waitForNavigation() {
     await this.page.waitForNavigation()
@@ -156,6 +160,9 @@ class helperMethods {
   async selectDropdownValue(dropdownSelector, labelText) {
     // Use Playwright's selectOption to select the dropdown option by value
     await this.page.selectOption(dropdownSelector, { label: labelText })
+  }
+  async pauserun() {
+    await this.page.pause(5000)
   }
 }
 export default helperMethods

@@ -1,5 +1,6 @@
 {
-  "baseUrl":"https://automationexercise.com/",
+  "baseUrl": "https://automationexercise.com/",
+  "domain": "automationexercise.com",
   "validemail": "soundarya.arikati@miele.com",
   "invalidemail": "soundarya.test@miele.com",
   "password": "Adi1.vara",
@@ -16,5 +17,8 @@
   "city": "Chirala",
   "state": "Andhra Pradesh",
   "zipcode": "523155",
-  "mobile": "987654321"
+  "mobile": "987654321",
+  "apiUrl": "https://automationexercise.com",
+  "csrfToken": "KCrzmy41vkElIlZKih113jHA3RcjcTOXsDc6PBPAc1BOiVvWGAnk4XdLmJOgtnGt",
+  "sessionId": "euiuyyobk3khthohydse5jlpyvcl2921"
 }
