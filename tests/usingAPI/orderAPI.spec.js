@@ -8,7 +8,7 @@ test.describe('Order Product', () => {
     createPage = await apiLoginPage.loginApi({ browser });
   });
 
-  test('orderProductUI', async () => {
+  test('@api orderProductUI', async () => {
     await createPage.loginPage.validateLogin('valid');
     await createPage.plpPage.viewFirstProduct();
     await createPage.pdpPage.validateProductInfo();
@@ -19,7 +19,7 @@ test.describe('Order Product', () => {
     await createPage.cartPage.conitnueCheckout();
     await createPage.checkoutPage.placeOrder();
   });
-  test('orderProduct', async () => {
+  test('@api orderProduct', async () => {
     await apiProductPage.addproductToCart();
     await createPage.homePage.navigateToCartssPage();
     await createPage.cartPage.conitnueCheckout();

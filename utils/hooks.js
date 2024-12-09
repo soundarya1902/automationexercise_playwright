@@ -7,9 +7,9 @@ const hooks = baseTest.extend({
   createPage: async ({ browser }, use) => {
     context = await browser.newContext();
     page = await context.newPage();
-    const createPage = new pageManager(page);  // Initialize pageManager
-    await use(createPage);  // Provide it to the tests
-  }
+    const createPage = new pageManager(page); // Initialize pageManager
+    await use(createPage); // Provide it to the tests
+  },
 });
 
 async function storeSessionInfo() {
