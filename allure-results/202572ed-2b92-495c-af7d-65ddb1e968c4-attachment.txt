@@ -1,0 +1,2 @@
+Navigating to '/'.
+Element exists on the page.

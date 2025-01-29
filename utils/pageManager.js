@@ -20,6 +20,7 @@ class pageManager extends helperMethods {
     this.pdpPage = new pdpPage(page);
     this.cartPage = new cartPage(page);
     this.checkoutPage = new checkoutPage(page);
+    this.apiLoginPage = new apiLoginPage(page);
   }
 }
 

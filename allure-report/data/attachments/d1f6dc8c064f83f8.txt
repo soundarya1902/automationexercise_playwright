@@ -1,0 +1,2 @@
+Navigating to '/'.
+Text content of element with selector '[data-qa="login-password"] + p': Your email or password is incorrect!

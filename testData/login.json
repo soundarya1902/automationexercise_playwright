@@ -1,0 +1,10 @@
+[
+  {
+    "email": "valid",
+    "description": "valid login"
+  },
+  {
+    "email": "invalid",
+    "description": "invalid login"
+  }
+]

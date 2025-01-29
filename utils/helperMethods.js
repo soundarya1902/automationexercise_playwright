@@ -12,36 +12,68 @@ class helperMethods {
     await this.page.goto(url)
   }
 
+  async lookForLocator(selector) {
+    try {
+      if ((await this.page.locator(selector).count()) > 0) return true
+      else return false // Element not found
+    } catch (error) {
+      if (error.name === 'ElementHandleError' && error.message.includes('no element found')) {
+        return false // Element not found
+      }
+      throw error // Propagate other errors
+    }
+  }
 
   async clickIfExists(selector) {
     try {
-      if ((await selector.count()) > 0) await this.page.locator(selector).click()
+      if ((await this.page.locator(selector).count()) > 0) await this.page.locator(selector).click()
       // else console.log(`Element not found with selector: ${selector}`)
     } catch (error) {
       console.error(`Error while clicking element with selector ${selector}:`, error)
     }
   }
 
-  async clickFirstElement(locator) {
+  async clickFirstElement(selector) {
+    await this.page.locator(selector).first().click({ timeout: interval })
+  }
 
-        await locator.first().click({ timeout: interval });
+  async getByPlaceholderAndClick(selector) {
+    await this.page.getByPlaceholder(selector).click({ timeout: interval })
+  }
 
+  async getByRoleNameAndClick(selector, name) {
+    await this.page.getByRole(selector, { name: name }).click()
   }
 
   async fillTextBox(selector, value) {
-    await selector.fill(value);
+    await this.page.fill(selector, value)
   }
 
+  async fillTextBoxForPlaceHolder(selector, value) {
+    await this.page.getByPlaceholder(selector).fill(value)
+  }
+
+  async forceClick(selector) {
+    await this.page.locator(selector).dispatchEvent('click')
+  }
+
+  async fillIframeTextBox(iframeSelector, selector, value) {
+    await this.page.frameLocator(iframeSelector).locator(selector).fill(value)
+  }
+
+  async fillIframeClickBtn(iframeSelector, selector) {
+    await this.page.frameLocator(iframeSelector).locator(selector).first().click()
+  }
 
   async validateText(selector, expectedText) {
-    const textContent = await selector.textContent()
+    const textContent = await this.page.textContent(selector)
     console.log(`Text content of element with selector '${selector}': ${textContent}`)
-   await  expect(textContent).toBe(expectedText)
+    expect(textContent.trim()).toBe(expectedText)
   }
 
   async getTextFromLocator(selector) {
-    await selector.nth(0).waitFor()
-    const text = selector.nth(0).textContent()
+    await this.page.locator(selector).nth(0).waitFor()
+    const text = await this.page.locator(selector).nth(0).textContent()
     if (!text || text.trim() === '') {
       throw new Error(`Text from locator ${selector} is empty`)
     }
@@ -93,7 +125,7 @@ class helperMethods {
   }
 
   async isElementExists(selector) {
-    if (await selector.count()  > 0)
+    if (await this.page.locator(selector).count()  > 0)
       console.log('Element exists on the page.');
      else
       console.log('Element does not exist on the page.');

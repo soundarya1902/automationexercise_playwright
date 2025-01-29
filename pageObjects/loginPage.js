@@ -1,33 +1,32 @@
 import helperMethods from '../utils/helperMethods'
 const testData = JSON.parse(JSON.stringify(require('../testData/testData.json')))
-
+const email_text="[data-qa=\"login-email\"]"
+const password_text="[data-qa=\"login-password\"]"
+const login_button='[data-qa="login-button"]'
+const logout="a[href*='logout']"
+const error_text='[data-qa="login-password"] + p'
 
 
 class loginPage extends helperMethods {
     constructor(page) {
         super(page)
-         this.email_text=this.page.locator("[data-qa=\"login-email\"]")
-         this.password_text=this.page.locator("[data-qa=\"login-password\"]")
-         this.login_button=this.page.locator('[data-qa="login-button"]')
-         this.logout=this.page.locator("a[href*='logout']")
-         this.error_text=this.page.locator('[data-qa="login-password"] + p')
     }
    async enterEmail(email) {
       let inputEmail=email==='valid'?testData.validemail:testData.invalidemail
-        await this.fillTextBox(this.email_text, inputEmail)
+        await this.fillTextBox(email_text, inputEmail)
     }
     async enterPassword() {
-         await this.fillTextBox(this.password_text, testData.password)
+         await this.fillTextBox(password_text, testData.password)
     }
     async clickLogin() {
-        await this.clickFirstElement(this.login_button)
+        await this.clickFirstElement(login_button)
     }
     async validateLogin(email) {
         await this.waitForNetworkCalls()
-        email==='valid'?await this.isElementExists(this.logout):await this.validateText(this.error_text,testData.errormessage)
+        email==='valid'?await this.isElementExists(logout):await this.validateText(error_text,testData.errormessage)
     }
     async validateNewAccount() {
-        await this.isElementVisible(this.logout)
+        await this.isElementVisible(logout)
     }
     async validUserLogin() {
         await this.enterEmail('valid')
