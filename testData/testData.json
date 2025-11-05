@@ -20,5 +20,44 @@
   "mobile": "987654321",
   "apiUrl": "https://automationexercise.com",
   "csrfToken": "F4gTlFobQrzlyRieMIEeIDLGpRt1aMK7jJfHTugupGkiZ5ACirRAz9GCKygm3GrG",
-  "sessionId": "ozz3ruybha2ci1qk3quuez29xac0gmwz"
+  "sessionId": "ozz3ruybha2ci1qk3quuez29xac0gmwz",
+  "category": {
+    "women": "Women",
+    "men": "Men",
+    "kids": "Kids",
+    "subcategories": {
+      "women": [
+        "Dress",
+        "Tops",
+        "Saree"
+      ],
+      "men": [
+        "Tshirts",
+        "Jeans"
+      ],
+      "kids": [
+        "Dress",
+        "Tops & Shirts"
+      ]
+    }
+  },
+  "brands": {
+    "sectionTitle": "Brands",
+    "brandsList": [
+      "Polo",
+      "H&M",
+      "Madame",
+      "Mast & Harbour",
+      "Babyhug",
+      "Allen Solly Junior",
+      "Kookie Kids",
+      "Biba"
+    ],
+    "firstBrand": "Polo"
+  },
+  "products": {
+    "productName": "Sleeveless Dress",
+    "productPrice": "Rs. 1000",
+    "productAmount": 1000
+  }
 }

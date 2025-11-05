@@ -1,0 +1,12 @@
+{
+  "chat.mcp.enabled": true,
+  "chat.mcp.access": "all",
+  "mcp": {
+    "servers": {
+      "playwright": {
+        "command": "npx",
+        "args": ["@playwright/mcp@latest"]
+      }
+    }
+  }
+}

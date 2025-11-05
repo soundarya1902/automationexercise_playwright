@@ -27,7 +27,7 @@ module.exports = defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
-    browserName: 'firefox',
+    browserName: 'chromium',
     baseURL: testData.baseUrl,
     viewport: null,
     launchOptions: {

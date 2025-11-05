@@ -1,0 +1,44 @@
+{
+  // Editor indentation settings
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+  "editor.indentSize": 2,
+  "editor.detectIndentation": true,
+  "editor.autoIndent": "full",
+  // JavaScript/TypeScript specific settings
+  "[javascript]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.autoIndent": "full",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescript]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.autoIndent": "full",
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true,
+    "editor.autoIndent": "full"
+  },
+  // Auto-formatting settings
+  "editor.formatOnType": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  // Bracket settings - no guide lines
+  "editor.guides.bracketPairs": false,
+  "editor.guides.indentation": false,
+  "editor.bracketPairColorization.enabled": false,
+  // Files settings
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  // Prettier settings (if you have Prettier extension)
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "prettier.semi": false,
+  "prettier.singleQuote": true
+}

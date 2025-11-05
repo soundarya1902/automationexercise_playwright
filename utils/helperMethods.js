@@ -164,5 +164,19 @@ class helperMethods {
   async pauserun() {
     await this.page.pause(5000)
   }
+
+  /**
+   * Validates the count of elements against an expected count
+   * @param {string} element - The CSS selector to find elements
+   * @param {number} count - The expected number of elements
+   */
+  async validateElementCount(element, count) {
+    const actualCount = await this.page.locator(element).count()
+    if (actualCount === count) {
+      console.log(`✓ Element count validation passed: Found ${actualCount} elements`)
+    } else {
+      throw new Error(`Element count validation failed: Expected ${count}, but found ${actualCount} elements`)
+    }
+  }
 }
 export default helperMethods

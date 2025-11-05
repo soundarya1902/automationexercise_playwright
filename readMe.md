@@ -20,7 +20,7 @@ trace and video-retain-on-failure: true,-- to get trace and video on failure
 
 specs are triggered in parallel
 tests in spec are triggered in sequence
-to test tests in a spec in parallel->use describe block->describe.configure({mode: 'parallel'})/test.describe.parallel('
+to run tests in a spec in parallel->use describe block->describe.configure({mode: 'parallel'})/test.describe.parallel('
 Login tests', () => {-- in spec file
 spec mean worker and by default playwright max is 5 and can be customized workers :2 in config file
 
