@@ -1,9 +1,9 @@
+import test from 'node:test';
 import helperMethods from '../utils/helperMethods';
 import { expect } from '@playwright/test';
 const DataManager = require('../utils/dataManager');
 
 const viewProduct_button = "a[href*='/product_details']";
-const testData = JSON.parse(JSON.stringify(require('../testData/testData.json')));
 const mainCategory = 'a[data-parent="#accordian"]';
 const headertextLocator = '.title.text-center';
 const breadcrumbLocator = '.breadcrumb li';
@@ -26,22 +26,22 @@ class plpPage extends helperMethods {
     await this.validateUrlEnd('product_details/1');
   }
   async verifyCategories() {
-    const categoryCount = Object.keys(testData.category).filter((key) => key !== 'subcategories').length;
+    const categoryCount = Object.keys(this.testData.category).filter((key) => key !== 'subcategories').length;
     await this.validateElementCount(mainCategory, categoryCount);
-    const categoryKeys = Object.keys(testData.category).filter((key) => key !== 'subcategories');
+    const categoryKeys = Object.keys(this.testData.category).filter((key) => key !== 'subcategories');
     await Promise.all(
       categoryKeys.map(async (CategoryKeyName, index) => {
         const categoryName = (await this.page.locator(mainCategory).nth(index).textContent()).trim();
-        expect(categoryName).toBe(testData.category[CategoryKeyName]);
+        expect(categoryName).toBe(this.testData.category[CategoryKeyName]);
       }),
     );
   }
   async verifySubCategories() {
-    const categoryKeysWithSubcategories = Object.keys(testData.category.subcategories);
+    const categoryKeysWithSubcategories = Object.keys(this.testData.category.subcategories);
     console.log(`Found categories with subcategories: ${categoryKeysWithSubcategories.join(', ')}`);
     for (const categoryKey of categoryKeysWithSubcategories) {
-      const categoryDisplayName = testData.category[categoryKey];
-      subcategories = testData.category.subcategories[categoryKey];
+      const categoryDisplayName = this.testData.category[categoryKey];
+      subcategories = this.testData.category.subcategories[categoryKey];
       console.log(`\n=== Testing ${categoryDisplayName} subcategories ===`);
       for (let i = 0; i < subcategories.length; i++) {
         const subcategoryName = subcategories[i];
@@ -78,11 +78,38 @@ class plpPage extends helperMethods {
       console.log(`=== Completed ${categoryDisplayName} subcategories ===`);
     }
   }
+
   async viewProductInCategory(categoryName) {
+    const firstProduct = await this.getProductDetailsFromPlp(categoryName);
+
+    // Verify product overlay on hover
+    await firstProduct.hover();
+    await expect(firstProduct.locator(productOverlay)).toBeVisible();
+    await expect(firstProduct.locator(productOverlay).locator(priceLocator)).toHaveText(
+      this.testData.products.productPrice,
+    );
+    await expect(firstProduct.locator(productOverlay).locator(descriptionLocator)).toHaveText(
+      this.testData.products.productName,
+    );
+    await expect(firstProduct.locator(productOverlay).locator('a').filter({ hasText: 'Add to cart' })).toBeVisible();
+
+    // Unhover and verify view button
+    await this.page.locator('body').hover();
+    await expect(firstProduct.locator(chooseIcon)).toHaveClass(/fa-plus-square/);
+    await this.navigateToProductsPageFromPlp(firstProduct);
+  }
+  async navigateToProductsPageFromPlp(firstProduct) {
+    // Navigate to PDP
+    await firstProduct.locator('.choose a').filter({ hasText: 'View Product' }).click();
+    await this.page.waitForLoadState('networkidle');
+    await this.validateUrlEnd(this.testData.products.url);
+  }
+
+  async getProductDetailsFromPlp(categoryName) {
     console.log(`Viewing first product in category: ${categoryName}`);
     await this.page.locator(`a[href*="${categoryName}"]`).click();
     categoryName = categoryName.toLowerCase();
-    subcategories = testData.category.subcategories[categoryName];
+    subcategories = this.testData.category.subcategories[categoryName];
     await this.page.locator(`a:has-text("${subcategories[0]}")`).first().click();
     await this.page.waitForLoadState('networkidle');
     await expect(this.page.locator(productTiles)).toHaveCount(3);
@@ -96,34 +123,16 @@ class plpPage extends helperMethods {
     await expect(productinfo.getByRole(imageRole)).toBeVisible();
     await expect(productinfo.getByRole(imageRole)).toHaveAttribute('alt');
     expect(typeof (await productinfo.getByRole(imageRole).getAttribute('alt'))).toBe('string');
-
     // Verify and capture price
     await expect(productinfo.locator(priceLocator)).toBeVisible();
     const priceText = await productinfo.locator(priceLocator).textContent();
     expect(priceText).toMatch(/Rs\.\s*\d+/);
 
     // Verify and capture product name
-    await expect(productinfo.locator(descriptionLocator)).toBeVisible();
+    await this.isElementVisible(productinfo.locator(descriptionLocator));
     const productName = await productinfo.locator(descriptionLocator).textContent();
     expect(productName).toBeTruthy();
 
-    // Verify product overlay on hover
-    await firstProduct.hover();
-    await expect(firstProduct.locator(productOverlay)).toBeVisible();
-    await expect(firstProduct.locator(productOverlay).locator(priceLocator)).toHaveText(priceText);
-    await expect(firstProduct.locator(productOverlay).locator(descriptionLocator)).toHaveText(productName);
-    await expect(firstProduct.locator(productOverlay).locator('a').filter({ hasText: 'Add to cart' })).toBeVisible();
-
-    // Unhover and verify view button
-    await this.page.locator('body').hover();
-    await expect(firstProduct.locator(chooseIcon)).toHaveClass(/fa-plus-square/);
-
-    // Navigate to PDP
-    await firstProduct.locator(chooseLink).filter({ hasText: 'View Product' }).click();
-    await this.page.waitForLoadState('networkidle');
-    await this.validateUrlEnd('product_details/3');
-
-    // Store captured data to testData.json file under products object
     DataManager.updateTestData({
       products: {
         productName: productName.trim(),
@@ -132,6 +141,7 @@ class plpPage extends helperMethods {
       },
     });
     console.log('Product data written to testData.json');
+    return firstProduct;
   }
 }
 export default plpPage;

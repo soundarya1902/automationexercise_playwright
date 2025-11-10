@@ -19,8 +19,8 @@
   "zipcode": "523155",
   "mobile": "987654321",
   "apiUrl": "https://automationexercise.com",
-  "csrfToken": "F4gTlFobQrzlyRieMIEeIDLGpRt1aMK7jJfHTugupGkiZ5ACirRAz9GCKygm3GrG",
-  "sessionId": "ozz3ruybha2ci1qk3quuez29xac0gmwz",
+  "csrfToken": "9aZFVv1nalbS7eDkEIaEDMpbbeU49DO1WAqfCdlKjmZRysGbSsT13GrIH1989R6d",
+  "sessionId": "iytt55b2fx74qrea8o278juu3p0k6dc3",
   "category": {
     "women": "Women",
     "men": "Men",
@@ -56,8 +56,27 @@
     "firstBrand": "Polo"
   },
   "products": {
+    "url": "product_details/3",
+    "category": "Women > Dress",
+    "altText": "ecommerce website products",
     "productName": "Sleeveless Dress",
     "productPrice": "Rs. 1000",
-    "productAmount": 1000
+    "productAmount": 1000,
+    "addToCartButtonText": "Add to cart",
+    "cartModal": {
+      "header": "Added!",
+      "bodyText": "Your product has been added to cart.",
+      "viewCartLink": "/view_cart",
+      "viewCartLinkText": "View Cart",
+      "continueShoppingButton": "Continue Shopping"
+    },
+    "shopDetails": {
+      "writeYourReview": "Write Your Review"
+    }
+  },
+  "cart": {
+    "cartPageUrl": "view_cart",
+    "breadcrumbText": "Shopping Cart",
+    "cartLinkText": "Proceed To Checkout"
   }
 }

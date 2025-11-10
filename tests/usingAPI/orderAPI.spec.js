@@ -13,16 +13,14 @@ test.describe('Order Product', () => {
     await createPage.plpPage.viewFirstProduct();
     await createPage.pdpPage.validateProductInfo();
     await createPage.pdpPage.addToCart();
-    await createPage.pdpPage.validateModal();
-    await createPage.pdpPage.continueShopping();
-    await createPage.homePage.navigateToCartssPage();
-    await createPage.cartPage.conitnueCheckout();
+    await createPage.homePage.navigateToCartsPage();
+    await createPage.cartPage.continueCheckout();
     await createPage.checkoutPage.placeOrder();
   });
   test('@api orderProduct', async () => {
     await apiProductPage.addproductToCart();
-    await createPage.homePage.navigateToCartssPage();
-    await createPage.cartPage.conitnueCheckout();
+    await createPage.homePage.navigateToCartsPage();
+    await createPage.cartPage.continueCheckout();
     await createPage.checkoutPage.placeOrder();
   });
 });

@@ -1,21 +1,21 @@
 import helperMethods from '../utils/helperMethods';
 import { request } from '@playwright/test';
 import pageManager from '../utils/pageManager';
-import fs from 'fs';
 
-const testData = JSON.parse(JSON.stringify(require('../testData/testData.json')));
 let createPage;
 
 class apiLoginPage extends helperMethods {
   static async loginApi({ browser }) {
+    // Get testData in static method
+    const DataManager = require('../utils/dataManager');
+    const testData = DataManager.readTestData();
+
     // req2-- no need of req1
     const csrfmiddleware = await request.newContext();
     const csrfmiddlewareResponse = await csrfmiddleware.get(testData.apiUrl + '/login');
     const csrfmiddlewaretokenText = await csrfmiddlewareResponse.text();
     const csrfmiddlewaretoken = csrfmiddlewaretokenText.split('name="csrfmiddlewaretoken" value="')[1].split('"')[0];
     const csrfToken = csrfmiddlewareResponse.headers()['set-cookie'].split('csrftoken=')[1].split(';')[0];
-    testData.csrfToken = csrfToken;
-    fs.writeFileSync('testData/testData.json', JSON.stringify(testData, null, 2));
     //req3
     const loginContext = await request.newContext();
     const loginResponse = await loginContext.post(testData.apiUrl + '/login', {
@@ -43,8 +43,13 @@ class apiLoginPage extends helperMethods {
       secure: false,
       sameSite: 'Lax',
     };
-    testData.sessionId = sessionIdCookie.value;
-    fs.writeFileSync('testData/testData.json', JSON.stringify(testData, null, 2));
+
+    // Update both values at once to avoid multiple file writes
+    DataManager.updateTestData({
+      csrfToken: csrfToken,
+      sessionId: sessionIdCookie.value,
+    });
+
     const context = await browser.newContext();
     await context.addCookies([sessionIdCookie]);
     //return await context.newPage()

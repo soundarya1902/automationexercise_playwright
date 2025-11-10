@@ -1,10 +1,12 @@
 import helperMethods from '../utils/helperMethods';
 import { expect, request } from '@playwright/test';
 
-const testData = JSON.parse(JSON.stringify(require('../testData/testData.json')));
-
 class apiProductPage extends helperMethods {
   static async addproductToCart() {
+    // Get testData in static method
+    const DataManager = require('../utils/dataManager');
+    const testData = DataManager.readTestData();
+
     const addProductContext = await request.newContext();
     const addProductResponse = await addProductContext.get(testData.apiUrl + '/add_to_cart/1', {
       params: {

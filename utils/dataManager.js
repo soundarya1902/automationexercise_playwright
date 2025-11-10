@@ -17,12 +17,31 @@ class DataManager {
     console.log('Test data written to file:', testDataPath);
   }
 
-  // Update specific fields in test data
+  // Update specific fields in test data (deep merge for nested objects)
   static updateTestData(updates) {
     const currentData = this.readTestData();
-    const updatedData = { ...currentData, ...updates };
+    const updatedData = this.deepMerge(currentData, updates);
     this.writeTestData(updatedData);
     return updatedData;
+  }
+
+  // Deep merge helper to preserve nested properties
+  static deepMerge(target, source) {
+    const output = { ...target };
+
+    for (const key in source) {
+      if (source.hasOwnProperty(key)) {
+        if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+          // If both are objects, merge recursively
+          output[key] = this.deepMerge(target[key] || {}, source[key]);
+        } else {
+          // Otherwise, overwrite with source value
+          output[key] = source[key];
+        }
+      }
+    }
+
+    return output;
   }
 
   // Get specific field from test data
