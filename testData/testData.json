@@ -77,6 +77,10 @@
   "cart": {
     "cartPageUrl": "view_cart",
     "breadcrumbText": "Shopping Cart",
-    "cartLinkText": "Proceed To Checkout"
+    "cartLinkText": "Proceed To Checkout",
+    "guestCheckoutModal": {
+      "bodyText": "Register / Login account to proceed on checkout.",
+      "registerLoginLinkText": "Register / Login"
+    }
   }
 }

@@ -8,5 +8,7 @@ test.describe('cart page checks', () => {
     await createPage.pdpPage.addToCart();
     await createPage.cartPage.validateCartDetails();
     await createPage.cartPage.continueGuestCheckout();
+    await createPage.cartPage.validateCheckoutModal();
+    await createPage.loginPage.validUserLogin();
   });
 });
